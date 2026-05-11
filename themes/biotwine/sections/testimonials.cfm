@@ -25,7 +25,7 @@
         <cfloop query="getTestimonials">
         <div class="testimonial-slide<cfif getTestimonials.currentRow EQ 1> is-active</cfif>">
           <blockquote class="testimonial-quote">
-            <p>#htmlEditFormat(quote)#</p>
+            <p>#quote#</p>
           </blockquote>
           <div class="testimonial-meta">
             <strong class="testimonial-company">#htmlEditFormat(company)#</strong>
