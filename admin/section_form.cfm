@@ -423,12 +423,17 @@ document.addEventListener('DOMContentLoaded', function() {
       ],
       callbacks: {
         onImageUpload: function(files) {
-          var fd = new FormData();
-          fd.append('file', files[0]);
-          fd.append('folder', 'img');
-          fetch('/admin/upload_image.cfm', {method:'POST', body:fd})
-            .then(r => r.json())
-            .then(d => { if (d.ok) jQuery('##about_body').summernote('insertImage', d.url); });
+          var reader = new FileReader();
+          reader.onload = function(e) {
+            var fd = new FormData();
+            fd.append('imageData', e.target.result);
+            fd.append('filename', files[0].name);
+            fd.append('folder', 'img');
+            fetch('/admin/upload_image.cfm', {method:'POST', body:fd})
+              .then(function(r) { return r.json(); })
+              .then(function(d) { if (d.ok) jQuery('##about_body').summernote('insertImage', d.url); });
+          };
+          reader.readAsDataURL(files[0]);
         }
       }
     });
@@ -483,21 +488,27 @@ function addGalleryRow() {
   document.getElementById('gallery-rows').appendChild(row);
 }
 
-// Gallery image upload
+// Gallery image upload — uses Base64 via btUploadImage from admin.js
 function btUploadGalleryImage(input, row) {
   if (!input.files || !input.files[0]) return;
-  var fd = new FormData();
-  fd.append('file', input.files[0]);
-  fd.append('folder', 'img');
-  fetch('/admin/upload_image.cfm', {method:'POST', body:fd})
-    .then(r => r.json())
-    .then(function(d) {
-      if (d.ok) {
-        row.querySelector('.gallery-img-input').value = d.url;
-      } else {
-        alert('Upload failed: ' + (d.error || 'unknown error'));
-      }
-    });
+  var file = input.files[0];
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var fd = new FormData();
+    fd.append('imageData', e.target.result);
+    fd.append('filename', file.name);
+    fd.append('folder', 'img');
+    fetch('/admin/upload_image.cfm', {method:'POST', body:fd})
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d.ok) {
+          row.querySelector('.gallery-img-input').value = d.url;
+        } else {
+          alert('Upload failed: ' + (d.error || 'unknown error'));
+        }
+      });
+  };
+  reader.readAsDataURL(file);
 }
 
 // ── Pre-submit: pack repeater data into hidden extra_data fields ------------

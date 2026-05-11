@@ -143,31 +143,4 @@
 
 <cfinclude template="/themes/biotwine/layouts/admin_close.cfm">
 
-<script>
-function btUploadImage(input, fieldId, previewId, folder) {
-  if (!input.files || !input.files.length) return;
-  var label = input.parentElement;
-  var origText = label.childNodes[0].textContent.trim();
-  label.childNodes[0].textContent = 'Uploading… ';
-
-  var fd = new FormData();
-  fd.append('file', input.files[0]);
-  fd.append('folder', folder);
-
-  fetch('/admin/upload_image.cfm', { method: 'POST', body: fd })
-    .then(function (r) { return r.json(); })
-    .then(function (data) {
-      if (data.ok) {
-        document.getElementById(fieldId).value = data.url;
-        var prev = document.getElementById(previewId);
-        if (prev) {
-          prev.innerHTML = '<img src="' + data.url + '" style="max-height:72px; border-radius:4px; border:1px solid var(--border-color); margin-top:0.25rem;">';
-        }
-      } else {
-        alert('Upload failed: ' + (data.error || 'unknown error'));
-      }
-    })
-    .catch(function () { alert('Upload failed. Check file type and try again.'); })
-    .finally(function () { label.childNodes[0].textContent = origText + ' '; });
-}
-</script>
+<!--- btUploadImage provided by admin.js --->
