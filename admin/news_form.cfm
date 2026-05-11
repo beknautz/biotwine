@@ -35,6 +35,9 @@
 
 <cfinclude template="/themes/biotwine/layouts/admin_open.cfm">
 
+<!--- Summernote CSS --->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-bs5.min.css">
+
 <cfoutput>
 
 <div style="margin-bottom:1rem;">
@@ -72,17 +75,17 @@
           <input type="text" id="slug-field" name="slug" class="form-control" value="#htmlEditFormat(getRecord.slug)#" required
             placeholder="url-friendly-slug" style="font-family:var(--font-mono);"
             oninput="this.dataset.slugEdited='1'">
-          <div style="font-size:0.75rem; color:var(--text-muted); margin-top:0.3rem;">Used in the URL: /news_detail.cfm?slug=<strong>your-slug</strong></div>
+          <div style="font-size:0.75rem; color:var(--text-muted); margin-top:0.3rem;">URL: /news_detail.cfm?slug=<strong>your-slug</strong></div>
         </div>
 
         <div class="form-group">
-          <label>Excerpt (shown on news listing and homepage)</label>
+          <label>Excerpt (shown on news listing)</label>
           <textarea name="excerpt" class="form-control" rows="3" placeholder="Brief summary...">#htmlEditFormat(getRecord.excerpt)#</textarea>
         </div>
 
         <div class="form-group">
-          <label>Body Content (HTML allowed)</label>
-          <textarea name="body" class="form-control" rows="14" placeholder="Full article body — HTML tags are supported...">#htmlEditFormat(getRecord.body)#</textarea>
+          <label>Body Content</label>
+          <textarea name="body" id="news_body" class="form-control">#getRecord.body#</textarea>
         </div>
 
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:1.25rem;">
@@ -91,8 +94,23 @@
             <input type="date" name="pub_date" class="form-control" value="#dateFormat(getRecord.pub_date,'yyyy-mm-dd')#" required>
           </div>
           <div class="form-group">
-            <label>Hero Image Filename</label>
-            <input type="text" name="image" class="form-control" value="#htmlEditFormat(getRecord.image)#" placeholder="news-article.jpg">
+            <label>Hero Image</label>
+            <div style="display:flex; gap:0.5rem; align-items:center;">
+              <input type="text" name="image" id="news_image_field" class="form-control"
+                value="#htmlEditFormat(getRecord.image)#" placeholder="filename.jpg">
+              <label class="btn btn-outline" style="cursor:pointer; white-space:nowrap; margin:0; padding:0.45rem 0.75rem;">
+                Upload
+                <input type="file" accept="image/jpeg,image/png,image/gif,image/webp" style="display:none;"
+                  onchange="btUploadImage(this,'news_image_field','news_image_preview','img')">
+              </label>
+            </div>
+            <div id="news_image_preview" style="margin-top:0.5rem;">
+              <cfif len(trim(getRecord.image))>
+                <img src="/assets/uploads/img/#htmlEditFormat(getRecord.image)#"
+                  style="max-height:72px; border-radius:4px; border:1px solid var(--border-color);"
+                  onerror="this.style.display='none'">
+              </cfif>
+            </div>
           </div>
         </div>
 
@@ -138,3 +156,58 @@
 </cfoutput>
 
 <cfinclude template="/themes/biotwine/layouts/admin_close.cfm">
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-bs5.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  // ── Summernote on body ───────────────────────────────────────────
+  var $body = jQuery('#news_body');
+  $body.summernote({
+    height: 380,
+    placeholder: 'Full article body...',
+    toolbar: [
+      ['style',   ['bold', 'italic', 'underline', 'clear']],
+      ['para',    ['ul', 'ol', 'paragraph']],
+      ['insert',  ['link', 'picture', 'hr']],
+      ['view',    ['codeview', 'fullscreen']],
+      ['history', ['undo', 'redo']]
+    ]
+  });
+
+  // Sync Summernote → textarea before HTMX submits
+  document.querySelector('form').addEventListener('htmx:configRequest', function (e) {
+    e.detail.parameters['body'] = $body.summernote('code');
+  });
+
+});
+
+// ── Image upload helper (shared across admin forms) ──────────────
+function btUploadImage(input, fieldId, previewId, folder) {
+  if (!input.files || !input.files.length) return;
+  var label = input.parentElement;
+  var origText = label.childNodes[0].textContent.trim();
+  label.childNodes[0].textContent = 'Uploading… ';
+
+  var fd = new FormData();
+  fd.append('file', input.files[0]);
+  fd.append('folder', folder);
+
+  fetch('/admin/upload_image.cfm', { method: 'POST', body: fd })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (data.ok) {
+        document.getElementById(fieldId).value = data.filename;
+        var prev = document.getElementById(previewId);
+        if (prev) {
+          prev.innerHTML = '<img src="' + data.url + '" style="max-height:72px; border-radius:4px; border:1px solid var(--border-color); margin-top:0.25rem;">';
+        }
+      } else {
+        alert('Upload failed: ' + (data.error || 'unknown error'));
+      }
+    })
+    .catch(function () { alert('Upload failed. Check file type and try again.'); })
+    .finally(function () { label.childNodes[0].textContent = origText + ' '; });
+}
+</script>

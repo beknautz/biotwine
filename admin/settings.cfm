@@ -75,8 +75,23 @@
           <textarea name="hero_subhead" class="form-control" rows="3">#htmlEditFormat(s.hero_subhead)#</textarea>
         </div>
         <div class="form-group">
-          <label>Hero Background Image Path</label>
-          <input type="text" name="hero_image" class="form-control" value="#htmlEditFormat(s.hero_image)#" placeholder="/assets/uploads/hero/home-hero.jpg">
+          <label>Hero Background Image</label>
+          <div style="display:flex; gap:0.5rem; align-items:center;">
+            <input type="text" name="hero_image" id="hero_image_field" class="form-control"
+              value="#htmlEditFormat(s.hero_image)#" placeholder="/assets/uploads/hero/home-hero.jpg">
+            <label class="btn btn-outline" style="cursor:pointer; white-space:nowrap; margin:0; padding:0.45rem 0.75rem;">
+              Upload
+              <input type="file" accept="image/jpeg,image/png,image/gif,image/webp" style="display:none;"
+                onchange="btUploadImage(this,'hero_image_field','hero_image_preview','hero')">
+            </label>
+          </div>
+          <div id="hero_image_preview" style="margin-top:0.5rem;">
+            <cfif len(trim(s.hero_image))>
+              <img src="#htmlEditFormat(s.hero_image)#"
+                style="max-height:72px; border-radius:4px; border:1px solid var(--border-color);"
+                onerror="this.style.display='none'">
+            </cfif>
+          </div>
         </div>
       </div>
 
@@ -127,3 +142,32 @@
 </cfoutput>
 
 <cfinclude template="/themes/biotwine/layouts/admin_close.cfm">
+
+<script>
+function btUploadImage(input, fieldId, previewId, folder) {
+  if (!input.files || !input.files.length) return;
+  var label = input.parentElement;
+  var origText = label.childNodes[0].textContent.trim();
+  label.childNodes[0].textContent = 'Uploading… ';
+
+  var fd = new FormData();
+  fd.append('file', input.files[0]);
+  fd.append('folder', folder);
+
+  fetch('/admin/upload_image.cfm', { method: 'POST', body: fd })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (data.ok) {
+        document.getElementById(fieldId).value = data.url;
+        var prev = document.getElementById(previewId);
+        if (prev) {
+          prev.innerHTML = '<img src="' + data.url + '" style="max-height:72px; border-radius:4px; border:1px solid var(--border-color); margin-top:0.25rem;">';
+        }
+      } else {
+        alert('Upload failed: ' + (data.error || 'unknown error'));
+      }
+    })
+    .catch(function () { alert('Upload failed. Check file type and try again.'); })
+    .finally(function () { label.childNodes[0].textContent = origText + ' '; });
+}
+</script>
