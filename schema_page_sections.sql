@@ -1,6 +1,8 @@
 -- Run on biotwinedsn — creates the page_sections table and seeds all 4 pages
 -- 2026-05-11
 
+DROP TABLE IF EXISTS `page_sections`;
+
 CREATE TABLE `page_sections` (
   `section_id`    int(11) NOT NULL AUTO_INCREMENT,
   `page_slug`     varchar(50)  NOT NULL,
