@@ -62,6 +62,11 @@ INSERT INTO `page_sections` (`page_slug`,`section_type`,`section_label`,`eyebrow
  '[{"image":"/assets/uploads/img/Pic1.jpg","alt":"BioTwine Manufacturing"},{"image":"/assets/uploads/img/Pic2.jpg","alt":"BioTwine Manufacturing"},{"image":"/assets/uploads/img/Pic3.jpg","alt":"BioTwine Manufacturing"},{"image":"/assets/uploads/img/Pic4.jpg","alt":"BioTwine Manufacturing"}]',
  1,4),
 
+('home','testimonials','Customer Testimonials',
+ 'What Our Customers Say',
+ 'Trusted by Farmers &amp; Manufacturers',
+ NULL,NULL,'','','','','',NULL,1,5),
+
 ('home','cta_dark','Contact CTA',
  'Get in Touch',
  'Ready to Order or Need a Custom Quote?',
@@ -69,7 +74,7 @@ INSERT INTO `page_sections` (`page_slug`,`section_type`,`section_label`,`eyebrow
  NULL,'','',
  'Request a Quote','/contact.cfm',
  '(509) 865-3340','tel:5098653340',
- NULL,1,5);
+ NULL,1,6);
 
 
 -- ── ABOUT PAGE ───────────────────────────────────────────────────────────────

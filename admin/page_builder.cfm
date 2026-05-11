@@ -61,6 +61,7 @@
           <option value="stats">Stats Bar — Row of numbers/stats</option>
           <option value="about_split">About Split — Image (or video) + text side by side</option>
           <option value="gallery">Photo Gallery — Grid of images</option>
+          <option value="testimonials">Testimonials Carousel</option>
           <option value="cta_dark">Dark CTA — Call-to-action strip</option>
           <cfelseif currentPage EQ "about">
           <option value="page_hero">Page Header — Title at top of page</option>

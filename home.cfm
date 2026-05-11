@@ -29,6 +29,9 @@
     <cfcase value="gallery">
       <cfinclude template="/themes/biotwine/sections/gallery.cfm">
     </cfcase>
+    <cfcase value="testimonials">
+      <cfinclude template="/themes/biotwine/sections/testimonials.cfm">
+    </cfcase>
     <cfcase value="cta_dark">
       <cfinclude template="/themes/biotwine/sections/cta_dark.cfm">
     </cfcase>

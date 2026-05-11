@@ -1458,6 +1458,138 @@ textarea.form-control { resize: vertical; min-height: 120px; }
 .page-header-title { font-size: 2rem; font-weight: 700; margin: 0; }
 
 /* ══════════════════════════════════════════════════════════════
+   TESTIMONIALS CAROUSEL
+   ══════════════════════════════════════════════════════════════ */
+
+.section-testimonials {
+  background: var(--bg-section-dark);
+  padding: 5rem 0;
+}
+
+.section-testimonials .section-eyebrow { color: var(--color-meadow); }
+.section-testimonials .section-title   { color: #FFFFFF; margin-bottom: 3rem; }
+
+.testimonial-carousel {
+  max-width: 820px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.testimonial-track { position: relative; }
+
+.testimonial-slide {
+  display: none;
+  animation: fadeSlide 400ms ease both;
+}
+
+.testimonial-slide.is-active { display: block; }
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.testimonial-quote {
+  margin: 0 0 2rem;
+  padding: 0;
+  border: none;
+}
+
+.testimonial-quote p {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  font-style: italic;
+  color: rgba(255,255,255,0.92);
+  line-height: 1.65;
+  margin: 0;
+  position: relative;
+}
+
+.testimonial-quote p::before {
+  content: '\201C';
+  font-size: 4rem;
+  color: var(--color-kraft);
+  line-height: 0;
+  vertical-align: -1.5rem;
+  margin-right: 0.15rem;
+  font-family: var(--font-display);
+}
+
+.testimonial-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.testimonial-company {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-kraft-light);
+}
+
+.testimonial-location,
+.testimonial-years {
+  font-size: var(--font-size-sm);
+  color: rgba(255,255,255,0.55);
+}
+
+.testimonial-location::before { content: '·'; margin-right: 1rem; }
+.testimonial-years::before    { content: '·'; margin-right: 1rem; }
+
+.testimonial-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+
+.testimonial-prev,
+.testimonial-next {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: rgba(255,255,255,0.7);
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.testimonial-prev:hover,
+.testimonial-next:hover {
+  background: var(--color-kraft);
+  color: #FFFFFF;
+  border-color: var(--color-kraft);
+}
+
+.testimonial-dots {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.testimonial-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.3);
+  cursor: pointer;
+  padding: 0;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.testimonial-dot.is-active {
+  background: var(--color-kraft);
+  transform: scale(1.35);
+}
+
+/* ══════════════════════════════════════════════════════════════
    VALUES GRID  (about page — feature cards 2×2)
    ══════════════════════════════════════════════════════════════ */
 
