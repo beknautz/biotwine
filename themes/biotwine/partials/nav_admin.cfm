@@ -24,6 +24,9 @@
     <a href="/admin/products_list.cfm" class="<cfif structKeyExists(request,'adminPage') AND request.adminPage EQ 'products'>active</cfif>">
       <i class="bi bi-box-seam nav-icon"></i> Products
     </a>
+    <a href="/admin/categories_list.cfm" class="<cfif structKeyExists(request,'adminPage') AND request.adminPage EQ 'categories'>active</cfif>">
+      <i class="bi bi-tags nav-icon"></i> Categories
+    </a>
     <a href="/admin/testimonials_list.cfm" class="<cfif structKeyExists(request,'adminPage') AND request.adminPage EQ 'testimonials'>active</cfif>">
       <i class="bi bi-chat-quote nav-icon"></i> Testimonials
     </a>
