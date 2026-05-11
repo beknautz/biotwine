@@ -24,12 +24,15 @@ function btUploadImage(input, fieldId, previewId, folder) {
 
   var reader = new FileReader();
   reader.onload = function(e) {
-    var fd = new FormData();
-    fd.append('imageData', e.target.result);   // full data URL: data:image/jpeg;base64,...
-    fd.append('filename', file.name);
-    fd.append('folder', folder || 'img');
-
-    fetch('/admin/upload_image.cfm', { method: 'POST', body: fd })
+    fetch('/admin/upload_image.cfm', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        imageData: e.target.result,
+        filename:  file.name,
+        folder:    folder || 'img'
+      })
+    })
       .then(function(r) { return r.json(); })
       .then(function(data) {
         if (data.ok) {

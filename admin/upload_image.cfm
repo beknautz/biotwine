@@ -5,26 +5,33 @@
 --->
 <cfcontent type="application/json; charset=utf-8">
 
-<cfparam name="form.imageData" default="">
-<cfparam name="form.filename"  default="">
-<cfparam name="form.folder"    default="img">
-
 <cftry>
+  <!--- Read JSON body (sent as application/json by admin.js) --->
+  <cfset requestBody = toString(getHTTPRequestData().content)>
+  <cfif NOT len(trim(requestBody))>
+    <cfoutput>{"ok":false,"error":"Empty request body."}</cfoutput>
+    <cfabort>
+  </cfif>
+  <cfset postData = deserializeJSON(requestBody)>
+  <cfparam name="postData.imageData" default="">
+  <cfparam name="postData.filename"  default="">
+  <cfparam name="postData.folder"    default="img">
+
   <!--- Validate folder whitelist --->
-  <cfset folder = lCase(trim(form.folder))>
+  <cfset folder = lCase(trim(postData.folder))>
   <cfif NOT listFindNoCase("products,img,hero,testimonials", folder)>
     <cfset folder = "img">
   </cfif>
 
   <!--- Validate Base64 data URL --->
-  <cfif NOT len(trim(form.imageData)) OR NOT findNoCase("base64,", form.imageData)>
+  <cfif NOT len(trim(postData.imageData)) OR NOT findNoCase("base64,", postData.imageData)>
     <cfoutput>{"ok":false,"error":"No valid image data received."}</cfoutput>
     <cfabort>
   </cfif>
 
   <!--- Split data URL into prefix and payload --->
-  <cfset b64Data   = listRest(form.imageData, ",")>
-  <cfset dataPrefix = listFirst(form.imageData, ",")>
+  <cfset b64Data    = listRest(postData.imageData, ",")>
+  <cfset dataPrefix = listFirst(postData.imageData, ",")>
 
   <!--- Determine extension --->
   <cfset mimeType = lCase(reReplaceNoCase(dataPrefix, "data:([^;]+);.*", "\1"))>
@@ -34,7 +41,7 @@
   <cfif mimeType EQ "image/webp"> <cfset ext = "webp"> </cfif>
 
   <!--- Build timestamped safe filename --->
-  <cfset origBase  = listFirst(trim(form.filename), ".")>
+  <cfset origBase  = listFirst(trim(postData.filename), ".")>
   <cfset safeName  = lCase(reReplaceNoCase(origBase, "[^a-z0-9\-_]", "-", "ALL"))>
   <cfset safeName  = left(reReplace(safeName, "-+", "-", "ALL"), 80)>
   <cfset stamp     = dateFormat(now(), "yyyymmdd") & timeFormat(now(), "HHmmss")>
