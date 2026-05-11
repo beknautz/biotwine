@@ -41,7 +41,7 @@ INSERT INTO `page_sections` (`page_slug`,`section_type`,`section_label`,`eyebrow
  NULL,1,1),
 
 ('home','stats','Stats Bar',
- '','','',NULL,NULL,'','','','','',
+ '','','',NULL,'','','','','','',
  '[{"number":"100+","label":"Years Combined Experience"},{"number":"35yr","label":"Perrault Farms Partnership"},{"number":"FSC","label":"Certified Sustainable Sourcing"},{"number":"100%","label":"Biodegradable U.S. & Canadian Kraft"}]',
  1,2),
 
@@ -56,7 +56,7 @@ INSERT INTO `page_sections` (`page_slug`,`section_type`,`section_label`,`eyebrow
  NULL,1,3),
 
 ('home','gallery','Photo Gallery',
- '','','',NULL,NULL,'','','','','',
+ '','','',NULL,'','','','','','',
  '[{"image":"/assets/uploads/img/Pic1.jpg","alt":"BioTwine Manufacturing"},{"image":"/assets/uploads/img/Pic2.jpg","alt":"BioTwine Manufacturing"},{"image":"/assets/uploads/img/Pic3.jpg","alt":"BioTwine Manufacturing"},{"image":"/assets/uploads/img/Pic4.jpg","alt":"BioTwine Manufacturing"}]',
  1,4),
 
@@ -64,7 +64,7 @@ INSERT INTO `page_sections` (`page_slug`,`section_type`,`section_label`,`eyebrow
  'Get in Touch',
  'Ready to Order or Need a Custom Quote?',
  'Our team is available Monday–Friday, 8am–5pm. Call us at (509) 865-3340 or submit a quote request online.',
- NULL,NULL,'',
+ NULL,'','',
  'Request a Quote','/contact.cfm',
  '(509) 865-3340','tel:5098653340',
  NULL,1,5);
@@ -78,7 +78,7 @@ INSERT INTO `page_sections` (`page_slug`,`section_type`,`section_label`,`eyebrow
  'Our Story',
  'About BioTwine Manufacturing',
  'Toppenish, Washington • Since 1994',
- NULL,NULL,'','','','','',NULL,1,1),
+ NULL,'','','','','','',NULL,1,1),
 
 ('about','about_split','Company Story',
  'Who We Are',
@@ -89,7 +89,7 @@ INSERT INTO `page_sections` (`page_slug`,`section_type`,`section_label`,`eyebrow
  '','','','',NULL,1,2),
 
 ('about','values','Values Grid',
- 'Our Commitments','What We Stand For','',NULL,NULL,'','','','','',
+ 'Our Commitments','What We Stand For','',NULL,'','','','','','',
  '[{"heading":"FSC Certified","text":"Our FSC Chain of Custody certification means every spool is traceable from forest to field — ideal for customers with sustainability commitments and ESG reporting requirements."},{"heading":"100% Biodegradable","text":"All BioTwine products are manufactured from kraft paper. They decompose naturally at season end — no microplastics, no cleanup, no landfill. Good for the crop and good for the land."},{"heading":"Made in the USA","text":"Manufactured in Toppenish, Washington, using U.S. and Canadian kraft paper. We''re proud to support domestic manufacturing and keep supply chains short and reliable."},{"heading":"Long-Term Partnerships","text":"We''ve partnered with Perrault Farms for 35 years. Long relationships built on performance and trust are how we do business. We''re not a transactional supplier — we''re part of the season."}]',
  1,3),
 
@@ -97,7 +97,7 @@ INSERT INTO `page_sections` (`page_slug`,`section_type`,`section_label`,`eyebrow
  'Work With Us',
  'Ready to Start a Conversation?',
  'Call us at (509) 865-3340 or submit a quote request online. We''ll get back to you within 1–2 business days.',
- NULL,NULL,'',
+ NULL,'','',
  'Request a Quote','/contact.cfm',
  'View Products','/products.cfm',
  NULL,1,4);
@@ -111,13 +111,13 @@ INSERT INTO `page_sections` (`page_slug`,`section_type`,`section_label`,`eyebrow
  'BioTwine Manufacturing',
  'Our Products',
  'Premium biodegradable twisted paper twine &amp; engineered for the field.',
- NULL,NULL,'','','','','',NULL,1,1),
+ NULL,'','','','','','',NULL,1,1),
 
 ('products','cta_dark','Contact CTA',
  'Let''s Talk',
  'Need a Custom Specification or Volume Pricing?',
  'Our team can work with you on custom twine specifications, volume pricing, and delivery logistics.',
- NULL,NULL,'',
+ NULL,'','',
  'Contact Us Today','/contact.cfm',
  '','',NULL,1,2);
 
@@ -130,7 +130,7 @@ INSERT INTO `page_sections` (`page_slug`,`section_type`,`section_label`,`eyebrow
  'Get in Touch',
  'Contact Us &amp; Request a Quote',
  'Our team is ready to help. Fill out the form below or give us a call.',
- NULL,NULL,'','','','','',NULL,1,1);
+ NULL,'','','','','','',NULL,1,1);
 
 
 ALTER TABLE `page_sections`
