@@ -1,0 +1,9 @@
+{
+  "name": "biotwine",
+  "label": "BioTwine",
+  "version": "1.0.0",
+  "author": "Enigma Marketing",
+  "description": "Custom theme for BioTwine Manufacturing. Earthy agricultural palette, Playfair Display headlines, clean editorial layout inspired by yakimachief.com.",
+  "layouts": ["default", "admin", "bare"],
+  "preview": "img/preview.png"
+}
