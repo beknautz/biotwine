@@ -25,7 +25,7 @@
   <!--- Sort arrows --->
   <div style="display:flex; flex-direction:column; gap:2px;">
     <cfif getSections.currentRow GT 1>
-    <form style="margin:0;" hx-post="/admin/section_sort.cfm" hx-target="###sections-list#" hx-swap="innerHTML">
+    <form style="margin:0;" hx-post="/admin/section_sort.cfm" hx-target="##sections-list" hx-swap="innerHTML">
       <input type="hidden" name="section_id" value="#getSections.section_id#">
       <input type="hidden" name="direction" value="up">
       <input type="hidden" name="page_slug" value="#pageSlug#">
@@ -35,7 +35,7 @@
     <button class="btn btn-sm btn-outline" style="padding:2px 7px; opacity:0.3;" disabled><i class="bi bi-chevron-up"></i></button>
     </cfif>
     <cfif getSections.currentRow LT getSections.recordCount>
-    <form style="margin:0;" hx-post="/admin/section_sort.cfm" hx-target="###sections-list#" hx-swap="innerHTML">
+    <form style="margin:0;" hx-post="/admin/section_sort.cfm" hx-target="##sections-list" hx-swap="innerHTML">
       <input type="hidden" name="section_id" value="#getSections.section_id#">
       <input type="hidden" name="direction" value="down">
       <input type="hidden" name="page_slug" value="#pageSlug#">
@@ -55,7 +55,7 @@
   </div>
 
   <!--- Active toggle --->
-  <form style="margin:0;" hx-post="/admin/section_save.cfm" hx-target="###sections-list#" hx-swap="innerHTML">
+  <form style="margin:0;" hx-post="/admin/section_save.cfm" hx-target="##sections-list" hx-swap="innerHTML">
     <input type="hidden" name="action" value="toggle">
     <input type="hidden" name="section_id" value="#getSections.section_id#">
     <input type="hidden" name="page_slug" value="#pageSlug#">
@@ -72,7 +72,7 @@
   <!--- Delete --->
   <form style="margin:0;"
     hx-post="/admin/section_delete.cfm"
-    hx-target="###sections-list#"
+    hx-target="##sections-list"
     hx-swap="innerHTML"
     hx-confirm="Delete this section? This cannot be undone.">
     <input type="hidden" name="section_id" value="#getSections.section_id#">
