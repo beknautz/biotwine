@@ -85,7 +85,7 @@
       </div>
       </cfif>
       <div class="mb-3">
-        <label class="form-label">Headline <span style="color:#C0392B;">*</span></label>
+        <label class="form-label">Headline <span style="color:##C0392B;">*</span></label>
         <input type="text" name="heading" class="form-control" value="#htmlEditFormat(s.heading)#">
       </div>
       <div class="mb-3">
@@ -154,7 +154,7 @@
         <input type="text" name="eyebrow" class="form-control" value="#htmlEditFormat(s.eyebrow)#" placeholder="e.g. Who We Are">
       </div>
       <div class="mb-3">
-        <label class="form-label">Heading <span style="color:#C0392B;">*</span> <span style="color:var(--text-muted); font-weight:400;">(HTML allowed: &lt;em&gt;, &lt;strong&gt;)</span></label>
+        <label class="form-label">Heading <span style="color:##C0392B;">*</span> <span style="color:var(--text-muted); font-weight:400;">(HTML allowed: &lt;em&gt;, &lt;strong&gt;)</span></label>
         <input type="text" name="heading" class="form-control" value="#s.heading#">
       </div>
     </div>
@@ -228,7 +228,7 @@
         <input type="text" name="eyebrow" class="form-control" value="#htmlEditFormat(s.eyebrow)#" placeholder="e.g. Get in Touch">
       </div>
       <div class="mb-3">
-        <label class="form-label">Heading <span style="color:#C0392B;">*</span></label>
+        <label class="form-label">Heading <span style="color:##C0392B;">*</span></label>
         <input type="text" name="heading" class="form-control" value="#htmlEditFormat(s.heading)#">
       </div>
       <div class="mb-3">

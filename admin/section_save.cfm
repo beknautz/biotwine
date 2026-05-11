@@ -97,7 +97,7 @@
       WHERE section_id = <cfqueryparam value="#val(form.section_id)#" cfsqltype="cf_sql_integer">
     </cfquery>
     <cfcatch type="database">
-      <cfoutput><div class="alert alert-error" style="padding:1rem; border-radius:6px; background:#fee; border:1px solid #fcc; color:#900; margin-bottom:1rem;">
+      <cfoutput><div class="alert alert-error" style="padding:1rem; border-radius:6px; background:##fee; border:1px solid ##fcc; color:##900; margin-bottom:1rem;">
         <strong>Save failed:</strong> #htmlEditFormat(cfcatch.message)#
       </div></cfoutput>
       <cfabort>
@@ -105,7 +105,7 @@
   </cftry>
 
   <cfoutput>
-  <div class="alert" style="padding:1rem; border-radius:6px; background:#f0faf3; border:1px solid #b6e6c5; color:#1a6633; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem;">
+  <div class="alert" style="padding:1rem; border-radius:6px; background:##f0faf3; border:1px solid ##b6e6c5; color:##1a6633; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem;">
     <i class="bi bi-check-circle-fill"></i> Section saved successfully.
     <a href="/admin/page_builder.cfm?page=#htmlEditFormat(pageSlug)#" style="margin-left:auto; font-size:var(--font-size-sm);">Back to Page Builder</a>
   </div>

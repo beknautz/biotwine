@@ -53,7 +53,7 @@
       <input type="hidden" name="page_slug" value="#htmlEditFormat(currentPage)#">
       <input type="hidden" name="action"    value="add">
       <div class="mb-3">
-        <label class="form-label">Section Type <span style="color:#C0392B;">*</span></label>
+        <label class="form-label">Section Type <span style="color:##C0392B;">*</span></label>
         <select name="section_type" class="form-control" required>
           <option value="">-- Choose a type --</option>
           <cfif currentPage EQ "home">

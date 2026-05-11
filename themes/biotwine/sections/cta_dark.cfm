@@ -5,7 +5,7 @@
     <cfif len(trim(eyebrow))>
     <div class="section-eyebrow" style="color:rgba(255,255,255,0.65);">#htmlEditFormat(eyebrow)#</div>
     </cfif>
-    <h2 class="section-title" style="color:#fff;">#heading#</h2>
+    <h2 class="section-title" style="color:##fff;">#heading#</h2>
     <cfif len(trim(subheading))>
     <p style="color:rgba(255,255,255,0.8); max-width:600px; margin:0 auto 2rem;">#htmlEditFormat(subheading)#</p>
     </cfif>
