@@ -15,6 +15,9 @@
     </a>
 
     <div class="admin-nav-section">Content</div>
+    <a href="/admin/page_builder.cfm" class="<cfif structKeyExists(request,'adminPage') AND request.adminPage EQ 'page_builder'>active</cfif>">
+      <i class="bi bi-layout-text-window nav-icon"></i> Page Builder
+    </a>
     <a href="/admin/pages_list.cfm" class="<cfif structKeyExists(request,'adminPage') AND request.adminPage EQ 'pages'>active</cfif>">
       <i class="bi bi-file-earmark-text nav-icon"></i> Pages
     </a>

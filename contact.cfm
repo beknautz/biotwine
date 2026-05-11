@@ -4,17 +4,25 @@
 <cfset request.pageTitle = "Contact Us &amp; Request a Quote">
 <cfparam name="url.product" default="">
 
+<cfquery name="getSections" datasource="#application.dsn#">
+  SELECT section_id, section_type, eyebrow, heading, subheading, body_text,
+         image, image_alt, cta_label, cta_url, cta2_label, cta2_url, extra_data
+  FROM   page_sections
+  WHERE  page_slug = 'contact'
+  AND    is_active = 1
+  ORDER  BY sort_order ASC
+</cfquery>
+
 <cfinclude template="/themes/biotwine/layouts/default_open.cfm">
 
-<cfoutput>
+<!--- Page hero from page_sections --->
+<cfloop query="getSections">
+  <cfif getSections.section_type EQ "page_hero">
+    <cfinclude template="/themes/biotwine/sections/page_hero.cfm">
+  </cfif>
+</cfloop>
 
-<section class="page-hero">
-  <div class="container">
-    <div class="eyebrow">Get in Touch</div>
-    <h1>Contact Us &amp; Request a Quote</h1>
-    <p>Our team is ready to help. Fill out the form below or give us a call.</p>
-  </div>
-</section>
+<cfoutput>
 
 <section class="section">
   <div class="container">
