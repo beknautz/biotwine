@@ -1,10 +1,7 @@
 <!--- admin/upload_image.cfm
-      Accepts a Base64 data URL (imageData) + filename + folder via POST.
-      Decodes and writes the file to /assets/uploads/<folder>/.
-      Returns JSON: {ok:true, url:"/assets/uploads/folder/filename.jpg"}
-
-      Uses cffile action="write" (binary) rather than cffile action="upload"
-      to avoid the Java sandbox FilePermission error on CF2023 shared hosting.
+      Accepts Base64 data URL (imageData) + filename + folder via POST.
+      Uses Java FileOutputStream to write directly to destination — no CF temp file.
+      Returns JSON: {ok:true, url:"/assets/uploads/folder/file.jpg"}
 --->
 <cfcontent type="application/json; charset=utf-8">
 
@@ -19,47 +16,45 @@
     <cfset folder = "img">
   </cfif>
 
-  <!--- Validate imageData --->
+  <!--- Validate Base64 data URL --->
   <cfif NOT len(trim(form.imageData)) OR NOT findNoCase("base64,", form.imageData)>
     <cfoutput>{"ok":false,"error":"No valid image data received."}</cfoutput>
     <cfabort>
   </cfif>
 
-  <!--- Extract mime type and Base64 payload from data URL --->
-  <!--- Format: data:image/jpeg;base64,/9j/4AAQ... --->
+  <!--- Split data URL into prefix and payload --->
+  <cfset b64Data   = listRest(form.imageData, ",")>
   <cfset dataPrefix = listFirst(form.imageData, ",")>
-  <cfset b64Data    = listRest(form.imageData, ",")>
 
-  <!--- Determine file extension from mime type in prefix --->
-  <cfset mimeType = "image/jpeg">
-  <cfif findNoCase("image/", dataPrefix)>
-    <cfset mimeType = lCase(reReplaceNoCase(dataPrefix, "data:([^;]+);.*", "\1"))>
-  </cfif>
+  <!--- Determine extension --->
+  <cfset mimeType = lCase(reReplaceNoCase(dataPrefix, "data:([^;]+);.*", "\1"))>
   <cfset ext = "jpg">
   <cfif mimeType EQ "image/png">  <cfset ext = "png">  </cfif>
   <cfif mimeType EQ "image/gif">  <cfset ext = "gif">  </cfif>
   <cfif mimeType EQ "image/webp"> <cfset ext = "webp"> </cfif>
 
-  <!--- Build a safe, timestamped filename --->
+  <!--- Build timestamped safe filename --->
   <cfset origBase  = listFirst(trim(form.filename), ".")>
   <cfset safeName  = lCase(reReplaceNoCase(origBase, "[^a-z0-9\-_]", "-", "ALL"))>
-  <cfset safeName  = reReplace(safeName, "-+", "-", "ALL")>
-  <cfset safeName  = left(safeName, 80)>
+  <cfset safeName  = left(reReplace(safeName, "-+", "-", "ALL"), 80)>
   <cfset stamp     = dateFormat(now(), "yyyymmdd") & timeFormat(now(), "HHmmss")>
   <cfset finalName = "#safeName#-#stamp#.#ext#">
 
-  <!--- Resolve save path and create directory if needed --->
+  <!--- Resolve destination directory --->
   <cfset uploadDir = expandPath("/assets/uploads/#folder#/")>
   <cfif NOT directoryExists(uploadDir)>
     <cfdirectory action="create" directory="#uploadDir#" mode="755">
   </cfif>
 
-  <!--- Decode Base64 → binary and write directly (no temp file involved) --->
-  <cfset binaryData = toBinary(b64Data)>
-  <cffile action="write"
-          file="#uploadDir##finalName#"
-          output="#binaryData#"
-          addnewline="false">
+  <!--- Decode Base64 to Java byte array --->
+  <cfset decoder    = createObject("java", "java.util.Base64").getDecoder()>
+  <cfset byteArray  = decoder.decode(javaCast("string", b64Data))>
+
+  <!--- Write directly via Java FileOutputStream — zero temp files --->
+  <cfset destPath = uploadDir & finalName>
+  <cfset fos = createObject("java", "java.io.FileOutputStream").init(destPath)>
+  <cfset fos.write(byteArray)>
+  <cfset fos.close()>
 
   <cfset fileUrl = "/assets/uploads/#folder#/#finalName#">
   <cfoutput>{"ok":true,"filename":"#jsStringFormat(finalName)#","url":"#jsStringFormat(fileUrl)#"}</cfoutput>
