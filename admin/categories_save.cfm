@@ -9,6 +9,10 @@
 <cfparam name="form.is_active"    default="0">
 <cfparam name="form.sort_order"   default="0">
 
+<!--- Hidden+checkbox sends "0,1" when checked; resolve to 0 or 1 --->
+<cfset form.is_active   = iif(listFindNoCase(form.is_active,   "1"), 1, 0)>
+<cfset form.section_alt = iif(listFindNoCase(form.section_alt, "1"), 1, 0)>
+
 <!--- Validation --->
 <cfif NOT len(trim(form.nav_label))>
   <div class="alert alert-danger">Nav label is required.</div>
@@ -31,8 +35,8 @@
         eyebrow     = <cfqueryparam value="#trim(form.eyebrow)#"     cfsqltype="cf_sql_varchar">,
         heading     = <cfqueryparam value="#trim(form.heading)#"     cfsqltype="cf_sql_varchar">,
         description = <cfqueryparam value="#trim(form.description)#" cfsqltype="cf_sql_varchar">,
-        section_alt = <cfqueryparam value="#form.section_alt#"       cfsqltype="cf_sql_bit">,
-        is_active   = <cfqueryparam value="#form.is_active#"         cfsqltype="cf_sql_bit">,
+        section_alt = <cfqueryparam value="#form.section_alt#"       cfsqltype="cf_sql_tinyint">,
+        is_active   = <cfqueryparam value="#form.is_active#"         cfsqltype="cf_sql_tinyint">,
         sort_order  = <cfqueryparam value="#val(form.sort_order)#"   cfsqltype="cf_sql_integer">,
         updated_at  = NOW()
       WHERE category_id = <cfqueryparam value="#form.category_id#" cfsqltype="cf_sql_integer">
@@ -47,8 +51,8 @@
         <cfqueryparam value="#trim(form.eyebrow)#"        cfsqltype="cf_sql_varchar">,
         <cfqueryparam value="#trim(form.heading)#"        cfsqltype="cf_sql_varchar">,
         <cfqueryparam value="#trim(form.description)#"    cfsqltype="cf_sql_varchar">,
-        <cfqueryparam value="#form.section_alt#"          cfsqltype="cf_sql_bit">,
-        <cfqueryparam value="#form.is_active#"            cfsqltype="cf_sql_bit">,
+        <cfqueryparam value="#form.section_alt#"          cfsqltype="cf_sql_tinyint">,
+        <cfqueryparam value="#form.is_active#"            cfsqltype="cf_sql_tinyint">,
         <cfqueryparam value="#val(form.sort_order)#"      cfsqltype="cf_sql_integer">,
         NOW(), NOW()
       )

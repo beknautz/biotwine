@@ -7,6 +7,9 @@
 <cfparam name="form.is_active"      default="0">
 <cfparam name="form.sort_order"     default="0">
 
+<!--- Hidden+checkbox sends "0,1" when checked; resolve to 0 or 1 --->
+<cfset form.is_active = iif(listFindNoCase(form.is_active, "1"), 1, 0)>
+
 <cfif NOT len(trim(form.quote)) OR NOT len(trim(form.company))>
   <div class="alert alert-danger">Quote and Company are required.</div>
   <cfabort>
@@ -20,7 +23,7 @@
         company       = <cfqueryparam value="#trim(form.company)#"       cfsqltype="cf_sql_varchar">,
         location      = <cfqueryparam value="#trim(form.location)#"      cfsqltype="cf_sql_varchar">,
         years_partner = <cfqueryparam value="#trim(form.years_partner)#" cfsqltype="cf_sql_varchar">,
-        is_active     = <cfqueryparam value="#form.is_active#"           cfsqltype="cf_sql_bit">,
+        is_active     = <cfqueryparam value="#form.is_active#"           cfsqltype="cf_sql_tinyint">,
         sort_order    = <cfqueryparam value="#val(form.sort_order)#"     cfsqltype="cf_sql_integer">,
         updated_at    = NOW()
       WHERE testimonial_id = <cfqueryparam value="#form.testimonial_id#" cfsqltype="cf_sql_integer">
@@ -33,7 +36,7 @@
         <cfqueryparam value="#trim(form.company)#"       cfsqltype="cf_sql_varchar">,
         <cfqueryparam value="#trim(form.location)#"      cfsqltype="cf_sql_varchar">,
         <cfqueryparam value="#trim(form.years_partner)#" cfsqltype="cf_sql_varchar">,
-        <cfqueryparam value="#form.is_active#"           cfsqltype="cf_sql_bit">,
+        <cfqueryparam value="#form.is_active#"           cfsqltype="cf_sql_tinyint">,
         <cfqueryparam value="#val(form.sort_order)#"     cfsqltype="cf_sql_integer">,
         NOW(), NOW()
       )

@@ -10,6 +10,9 @@
 <cfparam name="form.meta_title" default="">
 <cfparam name="form.meta_desc"  default="">
 
+<!--- Hidden+checkbox sends "0,1" when checked; resolve to 0 or 1 --->
+<cfset form.is_active = iif(listFindNoCase(form.is_active, "1"), 1, 0)>
+
 <cfif NOT len(trim(form.title)) OR NOT len(trim(form.slug))>
   <div class="alert alert-danger">Title and slug are required.</div>
   <cfabort>
@@ -38,7 +41,7 @@
         body       = <cfqueryparam value="#trim(form.body)#"       cfsqltype="cf_sql_varchar">,
         image      = <cfqueryparam value="#trim(form.image)#"      cfsqltype="cf_sql_varchar">,
         pub_date   = <cfqueryparam value="#dateFormat(form.pub_date,'yyyy-mm-dd')#" cfsqltype="cf_sql_date">,
-        is_active  = <cfqueryparam value="#form.is_active#"        cfsqltype="cf_sql_bit">,
+        is_active  = <cfqueryparam value="#form.is_active#"        cfsqltype="cf_sql_tinyint">,
         meta_title = <cfqueryparam value="#trim(form.meta_title)#" cfsqltype="cf_sql_varchar">,
         meta_desc  = <cfqueryparam value="#trim(form.meta_desc)#"  cfsqltype="cf_sql_varchar">,
         updated_at = NOW()
@@ -54,7 +57,7 @@
         <cfqueryparam value="#trim(form.body)#"       cfsqltype="cf_sql_varchar">,
         <cfqueryparam value="#trim(form.image)#"      cfsqltype="cf_sql_varchar">,
         <cfqueryparam value="#dateFormat(form.pub_date,'yyyy-mm-dd')#" cfsqltype="cf_sql_date">,
-        <cfqueryparam value="#form.is_active#"        cfsqltype="cf_sql_bit">,
+        <cfqueryparam value="#form.is_active#"        cfsqltype="cf_sql_tinyint">,
         <cfqueryparam value="#trim(form.meta_title)#" cfsqltype="cf_sql_varchar">,
         <cfqueryparam value="#trim(form.meta_desc)#"  cfsqltype="cf_sql_varchar">,
         NOW(), NOW()
