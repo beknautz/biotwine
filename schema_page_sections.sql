@@ -65,7 +65,7 @@ INSERT INTO `page_sections` (`page_slug`,`section_type`,`section_label`,`eyebrow
 ('home','testimonials','Customer Testimonials',
  'What Our Customers Say',
  'Trusted by Farmers &amp; Manufacturers',
- NULL,NULL,'','','','','',NULL,1,5),
+ NULL,NULL,'','','','','','',NULL,1,5),
 
 ('home','cta_dark','Contact CTA',
  'Get in Touch',
