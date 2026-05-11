@@ -23,7 +23,7 @@
 
       <div class="testimonial-track">
         <cfloop query="getTestimonials">
-        <div class="testimonial-slide#iif(getTestimonials.currentRow EQ 1, de(' is-active'), de(''))#">
+        <div class="testimonial-slide<cfif getTestimonials.currentRow EQ 1> is-active</cfif>">
           <blockquote class="testimonial-quote">
             <p>#htmlEditFormat(quote)#</p>
           </blockquote>
@@ -47,7 +47,7 @@
         </button>
         <div class="testimonial-dots">
           <cfloop query="getTestimonials">
-          <button class="testimonial-dot#iif(getTestimonials.currentRow EQ 1, de(' is-active'), de(''))#" data-index="#getTestimonials.currentRow - 1#" aria-label="Go to testimonial #getTestimonials.currentRow#"></button>
+          <button class="testimonial-dot<cfif getTestimonials.currentRow EQ 1> is-active</cfif>" data-index="#getTestimonials.currentRow - 1#" aria-label="Go to testimonial #getTestimonials.currentRow#"></button>
           </cfloop>
         </div>
         <button class="testimonial-next" aria-label="Next testimonial">
