@@ -34,7 +34,11 @@
       <cfloop query="getNews">
       <div class="news-card" data-fade data-fade-delay="#(currentRow * 60)#">
         <cfif len(trim(image))>
-          <cfset newsImgSrc = iif(left(image,1) EQ "/", de(image), de("/assets/uploads/img/" & image))>
+          <cfif left(trim(image),1) EQ "/">
+            <cfset newsImgSrc = trim(image)>
+          <cfelse>
+            <cfset newsImgSrc = "/assets/uploads/img/" & trim(image)>
+          </cfif>
           <img src="#htmlEditFormat(newsImgSrc)#" alt="#htmlEditFormat(title)#" style="width:100%;height:160px;object-fit:cover;border-radius:var(--border-radius);margin-bottom:1rem;" loading="lazy">
         </cfif>
         <div class="news-date">#dateFormat(pub_date, "mmmm d, yyyy")#</div>

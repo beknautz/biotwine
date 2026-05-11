@@ -46,7 +46,11 @@
     </ul>
 
     <cfif len(trim(getArticle.image))>
-      <cfset artImgSrc = iif(left(getArticle.image,1) EQ "/", de(getArticle.image), de("/assets/uploads/img/" & getArticle.image))>
+      <cfif left(trim(getArticle.image),1) EQ "/">
+        <cfset artImgSrc = trim(getArticle.image)>
+      <cfelse>
+        <cfset artImgSrc = "/assets/uploads/img/" & trim(getArticle.image)>
+      </cfif>
       <img src="#htmlEditFormat(artImgSrc)#" alt="#htmlEditFormat(getArticle.title)#" style="width:100%;border-radius:var(--border-radius-lg);margin-bottom:2rem;" loading="lazy">
     </cfif>
 

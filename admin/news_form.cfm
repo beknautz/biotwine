@@ -106,7 +106,11 @@
             </div>
             <div id="news_image_preview" style="margin-top:0.5rem;">
               <cfif len(trim(getRecord.image))>
-                <cfset newsPrevSrc = iif(left(getRecord.image,1) EQ "/", de(getRecord.image), de("/assets/uploads/news/" & getRecord.image))>
+                <cfif left(trim(getRecord.image),1) EQ "/">
+                  <cfset newsPrevSrc = trim(getRecord.image)>
+                <cfelse>
+                  <cfset newsPrevSrc = "/assets/uploads/news/" & trim(getRecord.image)>
+                </cfif>
                 <img src="#htmlEditFormat(newsPrevSrc)#"
                   style="max-height:72px; border-radius:4px; border:1px solid var(--border-color);"
                   onerror="this.style.display='none'">
