@@ -109,7 +109,8 @@
           </div>
           <div id="prod_image_preview" style="margin-top:0.5rem;">
             <cfif len(trim(getRecord.image))>
-              <img src="/assets/uploads/products/#htmlEditFormat(getRecord.image)#"
+              <cfset prevSrc = iif(left(getRecord.image,1) EQ "/", de(getRecord.image), de("/assets/uploads/products/" & getRecord.image))>
+              <img src="#htmlEditFormat(prevSrc)#"
                 style="max-height:72px; border-radius:4px; border:1px solid var(--border-color);"
                 onerror="this.style.display='none'">
             </cfif>

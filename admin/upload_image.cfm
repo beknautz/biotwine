@@ -19,7 +19,7 @@
 
   <!--- Validate folder whitelist --->
   <cfset folder = lCase(trim(postData.folder))>
-  <cfif NOT listFindNoCase("products,img,hero,testimonials", folder)>
+  <cfif NOT listFindNoCase("products,img,hero,testimonials,news", folder)>
     <cfset folder = "img">
   </cfif>
 

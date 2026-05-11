@@ -101,12 +101,13 @@
               <label class="btn btn-outline" style="cursor:pointer; white-space:nowrap; margin:0; padding:0.45rem 0.75rem;">
                 Upload
                 <input type="file" accept="image/jpeg,image/png,image/gif,image/webp" style="display:none;"
-                  onchange="btUploadImage(this,'news_image_field','news_image_preview','img')">
+                  onchange="btUploadImage(this,'news_image_field','news_image_preview','news')">
               </label>
             </div>
             <div id="news_image_preview" style="margin-top:0.5rem;">
               <cfif len(trim(getRecord.image))>
-                <img src="/assets/uploads/img/#htmlEditFormat(getRecord.image)#"
+                <cfset newsPrevSrc = iif(left(getRecord.image,1) EQ "/", de(getRecord.image), de("/assets/uploads/news/" & getRecord.image))>
+                <img src="#htmlEditFormat(newsPrevSrc)#"
                   style="max-height:72px; border-radius:4px; border:1px solid var(--border-color);"
                   onerror="this.style.display='none'">
               </cfif>

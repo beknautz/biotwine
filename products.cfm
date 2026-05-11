@@ -89,7 +89,8 @@
         <div class="product-card" data-fade="" data-fade-delay="#(catProducts.currentRow * 80)#">
           <div class="product-card-img" style="background:var(--bg-card-alt); display:flex; align-items:center; justify-content:center; height:180px;">
             <cfif len(trim(catProducts.image))>
-              <img src="/assets/uploads/products/#htmlEditFormat(catProducts.image)#" alt="#htmlEditFormat(catProducts.name)#" style="width:100%; height:180px; object-fit:cover;">
+              <cfset prodImgSrc = iif(left(catProducts.image,1) EQ "/", de(catProducts.image), de("/assets/uploads/products/" & catProducts.image))>
+              <img src="#htmlEditFormat(prodImgSrc)#" alt="#htmlEditFormat(catProducts.name)#" style="width:100%; height:180px; object-fit:cover;">
             <cfelse>
               <span style="font-size:3rem;">🌿</span>
             </cfif>
