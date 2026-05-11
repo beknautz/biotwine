@@ -41,19 +41,11 @@
     </cfcatch>
 </cftry>
 
-<!--- Featured testimonial --->
-<cftry>
-    <cfquery name="getTestimonial" datasource="#application.dsn#">
-        SELECT quote, company, location, years_partner
-        FROM testimonials
-        WHERE is_active = <cfqueryparam value="1" cfsqltype="cf_sql_bit">
-        ORDER BY sort_order ASC
-        LIMIT 1
-    </cfquery>
-    <cfcatch type="database">
-        <cfset getTestimonial = queryNew("quote,company,location,years_partner")>
-    </cfcatch>
-</cftry>
+<!--- Testimonials carousel vars (used by section renderer) --->
+<cfset section_id  = "home-testimonials">
+<cfset eyebrow     = "From Our Customers">
+<cfset heading     = "Trusted by Growers &amp; Manufacturers">
+<cfset subheading  = "">
 
 <!--- ── LAYOUT OPEN ────────────────────────────────────────────────── --->
 <cfinclude template="/themes/biotwine/layouts/default_open.cfm">
@@ -105,24 +97,9 @@
 </cfif>
 
 <!--- ══════════════════════════════════════════════════════════════
-      TESTIMONIAL — dynamic, always live from DB
+      TESTIMONIALS — carousel, rendered by section renderer
       ══════════════════════════════════════════════════════════════ --->
-<cfif getTestimonial.recordCount GT 0>
-<section class="testimonial-section">
-  <div class="container-narrow">
-    <div data-fade>
-      <p class="testimonial-body">&ldquo;#getTestimonial.quote#&rdquo;</p>
-      <div class="testimonial-attribution">
-        <strong>#htmlEditFormat(getTestimonial.company)#</strong>
-        #htmlEditFormat(getTestimonial.location)#
-        <cfif len(trim(getTestimonial.years_partner))>
-          &bull; #htmlEditFormat(getTestimonial.years_partner)# partnership
-        </cfif>
-      </div>
-    </div>
-  </div>
-</section>
-</cfif>
+<cfinclude template="/themes/biotwine/sections/testimonials.cfm">
 
 <!--- ══════════════════════════════════════════════════════════════
       NEWS — dynamic, always live from DB
